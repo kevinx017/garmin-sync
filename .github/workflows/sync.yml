@@ -3,19 +3,22 @@ name: Garmin同步
 on:
   schedule:
     - cron: "0 2 * * *"  # 每天北京时间10点自动同步
-  workflow_dispatch:     # 可手动点击运行
+  workflow_dispatch:     # 允许手动运行
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v5  # 升级到v5，消除Node.js警告
+      
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v6  # 升级到v6，消除Node.js警告
         with:
           python-version: "3.11"
+      
       - name: 安装依赖
         run: pip install -r requirements.txt
+      
       - name: 开始同步
         env:
           GARMIN_INTL_EMAIL: ${{ secrets.GARMIN_INTL_EMAIL }}
