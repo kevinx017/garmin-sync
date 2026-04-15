@@ -28,7 +28,7 @@ def main():
 
         try:
             # 下载.fit原始数据
-            fit_data = intl.download_activity(act_id, dl_fmt=1)
+            fit_data = intl.download_activity(act_id, fmt="fit")
 
             # 上传大陆版
             cn.upload_activity(
