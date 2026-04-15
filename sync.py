@@ -27,7 +27,7 @@ def main():
         print(f"正在处理: {name} ({act_id})")
 
         try:
-            # 下载.fit原始数据
+            # 修复：新版库用 fmt="fit"，替代旧版 dl_fmt=1
             fit_data = intl.download_activity(act_id, fmt="fit")
 
             # 上传大陆版
@@ -43,7 +43,7 @@ def main():
             if "duplicate" in str(e).lower():
                 print(f"ℹ️ 已存在，跳过: {name}")
             else:
-                print(f"❌ 失败: {name} | {str(e)}")
+                print(f"❌ 失败: {name} | 错误详情: {str(e)}")
 
     print(f"\n🎉 同步完成！本次成功同步: {sync_count} 条")
 
