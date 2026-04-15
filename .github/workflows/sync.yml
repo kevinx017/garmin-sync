@@ -34,4 +34,3 @@ jobs:
           GARMIN_INTL_PASSWORD: ${{ secrets.GARMIN_INTL_PASSWORD }}
           GARMIN_CN_EMAIL: ${{ secrets.GARMIN_CN_EMAIL }}
           GARMIN_CN_PASSWORD: ${{ secrets.GARMIN_CN_PASSWORD }}
-        run: python sync.py
