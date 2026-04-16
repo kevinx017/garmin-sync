@@ -13,26 +13,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 修复佳明域名解析失败（关键）
-      - name: Fix Garmin DNS
-        run: |
-          echo "185.199.108.133 mobile.integration.garmin.com" | sudo tee -a /etc/hosts
-          echo "185.199.109.133 sso.garmin.com" | sudo tee -a /etc/hosts
-          echo "185.199.110.133 sso.garmin.com" | sudo tee -a /etc/hosts
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
-      # 带延迟+重试，绕过IP限流（关键）
       - name: Run sync script
         run: |
-          sleep 30
-          python sync.py || sleep 40 && python sync.py
+          sleep 20
+          timeout 120s python sync.py || (sleep 30 && timeout 120s python sync.py)
         env:
           GARMIN_INTL_EMAIL: ${{ secrets.GARMIN_INTL_EMAIL }}
           GARMIN_INTL_PASSWORD: ${{ secrets.GARMIN_INTL_PASSWORD }}
